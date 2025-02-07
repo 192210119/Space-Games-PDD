@@ -194,18 +194,19 @@ body {
     justify-content: center;
     align-items: center;
     padding-bottom: 5vh;
+    gap: 20px;
 }
 
 .welcome-section {
     text-align: center;
-    margin-right: 200px;
+    margin-right: 60px;
     transform: translateY(-5vh);
 }
 
 .welcome-text {
     font-family: 'Audiowide', cursive;
     font-size: 5rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     display: flex;
     justify-content: center;
     gap: 0.5rem;
@@ -241,27 +242,14 @@ body {
 
 .game-title {
     font-family: 'Orbitron', sans-serif;
-    font-weight: 900;
     font-size: 3.5rem;
-    margin-bottom: 3rem;
-    margin-top: 2rem;
-    background: linear-gradient(45deg, #ff4d4d, #ff0080, #ff4d4d);
-    background-size: 200% auto;
-    color: transparent;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #ff4d4d, #ff0080);
     -webkit-background-clip: text;
     background-clip: text;
-    animation: gradient 3s linear infinite;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 
-        2px 2px 4px rgba(255, 0, 128, 0.3),
-        -2px -2px 4px rgba(255, 77, 77, 0.3);
-}
-
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    color: transparent;
+    margin-bottom: 2rem;
+    animation: titleGlow 2s ease-in-out infinite alternate;
 }
 
 /* Button Styles */
@@ -298,217 +286,83 @@ body {
 /* Rocket Styles */
 .rocket-container {
     position: relative;
-    width: 200px;
-    height: 400px;
-    margin-left: 50px;
+    width: 400px;
+    height: 600px;
+    margin-left: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .rocket {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     animation: rocketHover 3s ease-in-out infinite;
 }
 
 @keyframes rocketHover {
-    0% { transform: translateY(0) rotate(1deg); }
-    50% { transform: translateY(-20px) rotate(-1deg); }
-    100% { transform: translateY(0) rotate(1deg); }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
 }
 
-.rocket-head {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 80px;
-    background: linear-gradient(135deg, #e6e6e6, #ffffff);
-    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-    z-index: 2;
-}
-
-.rocket-body {
-    position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 200px;
-    background: linear-gradient(90deg, #d3d3d3, #ffffff, #d3d3d3);
-    border-radius: 40px 40px 20px 20px;
-    overflow: hidden;
-}
-
-.rocket-window {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 40px;
-    background: #000033;
-    border-radius: 50%;
-    border: 4px solid #666;
-    box-shadow: inset 0 0 10px rgba(255,255,255,0.5);
-}
-
-.rocket-detail {
-    position: absolute;
-    width: 15px;
-    height: 80px;
-    background: #ff4d4d;
-    border-radius: 10px;
-}
-
-.rocket-detail.left {
-    left: 0;
-    top: 50px;
-}
-
-.rocket-detail.right {
-    right: 0;
-    top: 50px;
-}
-
-.rocket-fins {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    height: 80px;
-}
-
-.fin {
-    position: absolute;
-    width: 40px;
-    height: 80px;
-    background: linear-gradient(45deg, #ff4d4d, #ff0080);
-    clip-path: polygon(0 0, 100% 30%, 100% 100%, 0 70%);
-}
-
-.fin-left {
-    left: -20px;
-    transform: rotate(-20deg);
-}
-
-.fin-right {
-    right: -20px;
-    transform: rotate(20deg);
-}
-
-/* Enhanced Flame Effects */
-.rocket-exhaust {
-    position: absolute;
-    bottom: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 80px;
-}
-
-@keyframes flameFlicker {
-    0%, 100% { transform: scaleY(1) translateY(0); }
-    50% { transform: scaleY(1.2) translateY(5px); }
-}
-
-@keyframes sideFlame {
-    0%, 100% { transform: scale(1) rotate(0); }
-    50% { transform: scale(1.1) rotate(5deg); }
-}
-
-.flames {
-    position: relative;
+.rocket-image {
     width: 100%;
     height: 100%;
-}
-
-.flame {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.flame-main {
-    width: 40px;
-    height: 80px;
-    background: linear-gradient(to bottom, #ff4d4d, #ff9933, #ffff66);
-    border-radius: 0 0 20px 20px;
-    animation: flameFlicker 0.2s infinite;
-}
-
-.flame-side {
-    width: 20px;
-    height: 40px;
-    background: linear-gradient(to bottom, #ff9933, #ffff66);
-    border-radius: 0 0 10px 10px;
-    animation: sideFlame 0.3s infinite;
-}
-
-.flame-side-left {
-    left: 5px;
-    transform: rotate(-15deg);
-}
-
-.flame-side-right {
-    left: auto;
-    right: 5px;
-    transform: rotate(15deg);
-}
-
-@keyframes particleRise {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100px) scale(0); opacity: 0; }
-}
-
-.flame-particles {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 60px;
-    background: 
-        radial-gradient(circle at center, #ffff66 1px, transparent 2px),
-        radial-gradient(circle at 30% 40%, #ffff66 1px, transparent 2px),
-        radial-gradient(circle at 70% 60%, #ffff66 1px, transparent 2px);
-    animation: particleRise 1s infinite;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+    transform: translateY(-10%) scale(1.2);
+    transform-origin: center center;
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .welcome-text {
-        font-size: 3.5rem;
-        margin-bottom: 3rem;
-    }
-    
-    .game-title {
-        font-size: 2.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 2.5rem;
-    }
-    
+@media (max-width: 1200px) {
     .rocket-container {
-        transform: scale(0.8);
+        width: 350px;
+        height: 525px;
+        margin-left: 30px;
+    }
+    
+    .welcome-section {
+        margin-right: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        gap: 10px;
+    }
+
+    .rocket-container {
+        width: 300px;
+        height: 450px;
         margin-left: 20px;
+        transform: scale(0.9);
+    }
+    
+    .welcome-section {
+        margin-right: 30px;
     }
 }
 
 @media (max-width: 480px) {
-    .welcome-text {
-        font-size: 2.5rem;
-        margin-bottom: 2.5rem;
+    .content {
+        flex-direction: column;
+        gap: 5px;
     }
-    
-    .game-title {
-        font-size: 2rem;
-        margin-top: 1rem;
-        margin-bottom: 2rem;
-        letter-spacing: 2px;
-    }
-    
+
     .rocket-container {
-        transform: scale(0.6);
-        margin-left: 0;
+        width: 250px;
+        height: 375px;
+        margin-left: 10px;
+        transform: scale(0.8);
+    }
+    
+    .welcome-section {
+        margin-right: 10px;
     }
 }
