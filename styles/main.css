@@ -1,0 +1,359 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Space Background */
+.space-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #000000, #0c164d, #000000);
+}
+
+/* Stars Animation */
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+@keyframes moveUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100%); }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes asteroidFloat {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, 100vh) rotate(180deg); }
+    100% { transform: translate(0, 200vh) rotate(360deg); }
+}
+
+.stars, .stars2, .stars3, .stars4, .stars5 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: 1000px 1000px;
+}
+
+.stars {
+    background-image: 
+        radial-gradient(2px 2px at 100px 100px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 300px 300px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 500px 500px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 700px 200px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 900px 400px, #fff, rgba(0,0,0,0));
+    animation: moveUp 20s linear infinite;
+}
+
+.stars2 {
+    background-image: 
+        radial-gradient(2px 2px at 200px 150px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 400px 350px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 600px 550px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 800px 250px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 1000px 450px, #fff, rgba(0,0,0,0));
+    animation: moveUp 30s linear infinite;
+}
+
+.stars3 {
+    background-image: 
+        radial-gradient(3px 3px at 150px 200px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 350px 400px, #fff, rgba(0,0,0,0)),
+        radial-gradient(4px 4px at 550px 600px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 750px 300px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 950px 500px, #fff, rgba(0,0,0,0));
+    animation: moveUp 40s linear infinite;
+}
+
+.stars4 {
+    background-image: 
+        radial-gradient(2px 2px at 250px 175px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 450px 375px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 650px 575px, #fff, rgba(0,0,0,0)),
+        radial-gradient(4px 4px at 850px 275px, #fff, rgba(0,0,0,0));
+    animation: moveUp 25s linear infinite;
+}
+
+.stars5 {
+    background-image: 
+        radial-gradient(3px 3px at 175px 250px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 375px 450px, #fff, rgba(0,0,0,0)),
+        radial-gradient(4px 4px at 575px 650px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 775px 350px, #fff, rgba(0,0,0,0));
+    animation: moveUp 35s linear infinite;
+}
+
+.nebula {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(255,0,100,0.1), transparent 30%),
+        radial-gradient(circle at 70% 60%, rgba(100,0,255,0.1), transparent 40%);
+    animation: moveUp 120s linear infinite;
+}
+
+/* Planets */
+.planets {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    animation: moveUp 120s linear infinite;
+}
+
+.planet {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.planet1 {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #45171d);
+    top: 20%;
+    left: 15%;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+}
+
+.planet2 {
+    width: 45px;
+    height: 45px;
+    background: radial-gradient(circle at 30% 30%, #4ecdc4, #2c7873);
+    top: 60%;
+    right: 10%;
+    box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+}
+
+.planet3 {
+    width: 75px;
+    height: 75px;
+    background: radial-gradient(circle at 30% 30%, #fed766, #996c00);
+    top: 80%;
+    left: 25%;
+    box-shadow: 0 0 20px rgba(254, 215, 102, 0.3);
+}
+
+/* Asteroids */
+.asteroids {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+}
+
+.asteroid {
+    position: absolute;
+    background: linear-gradient(45deg, #8d8d8d, #4a4a4a);
+    clip-path: polygon(50% 0%, 80% 30%, 100% 50%, 80% 70%, 50% 100%, 20% 70%, 0% 50%, 20% 30%);
+}
+
+.asteroid1 {
+    width: 20px;
+    height: 20px;
+    left: 30%;
+    animation: asteroidFloat 15s linear infinite;
+}
+
+.asteroid2 {
+    width: 15px;
+    height: 15px;
+    left: 60%;
+    animation: asteroidFloat 12s linear infinite;
+    animation-delay: -6s;
+}
+
+.asteroid3 {
+    width: 25px;
+    height: 25px;
+    left: 80%;
+    animation: asteroidFloat 18s linear infinite;
+    animation-delay: -9s;
+}
+
+/* Content Styles */
+.content {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-right: 200px;
+}
+
+.welcome-text {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.game-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #ff6b6b;
+    text-shadow: 0 0 15px rgba(255,107,107,0.5);
+}
+
+/* Button Styles */
+.lets-go-btn {
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.lets-go-btn:hover {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* Rocket Styles */
+.rocket-container {
+    position: relative;
+    width: 150px;
+    height: 300px;
+}
+
+.rocket {
+    position: absolute;
+    animation: hover 2s ease-in-out infinite;
+}
+
+.rocket-body {
+    width: 60px;
+    height: 120px;
+    background: linear-gradient(90deg, #d3d3d3, #fff);
+    border-radius: 50% 50% 0 0;
+    position: relative;
+}
+
+.window {
+    width: 20px;
+    height: 20px;
+    background: #000033;
+    border-radius: 50%;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid #666;
+}
+
+.fins {
+    position: relative;
+}
+
+.fin {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    background: #ff6b6b;
+}
+
+.fin.left {
+    transform: rotate(-30deg);
+    left: -15px;
+}
+
+.fin.right {
+    transform: rotate(30deg);
+    right: -15px;
+}
+
+/* Flame Animation */
+@keyframes flicker {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.2); }
+    100% { transform: scaleY(1); }
+}
+
+.flames {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.flame {
+    width: 20px;
+    height: 40px;
+    background: linear-gradient(to bottom, #ff6b6b, #ff4b4b);
+    border-radius: 0 0 20px 20px;
+    animation: flicker 0.2s infinite;
+}
+
+/* Hover Animation */
+@keyframes hover {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-section {
+        margin-right: 0;
+        margin-bottom: 50px;
+    }
+    
+    .content {
+        flex-direction: column;
+    }
+    
+    .welcome-text {
+        font-size: 3rem;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .rocket-container {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-text {
+        font-size: 2.5rem;
+    }
+    
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .lets-go-btn {
+        padding: 0.8rem 1.6rem;
+        font-size: 1.2rem;
+    }
+    
+    .rocket-container {
+        transform: scale(0.6);
+    }
+}
