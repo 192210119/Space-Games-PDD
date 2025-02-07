@@ -11,14 +11,51 @@ body {
     color: #fff;
     overflow: hidden;
     min-height: 100vh;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+body.fade-out {
+    opacity: 0;
 }
 
 /* Space Background */
 .space-background {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #000000, #0c164d, #000000);
+    background: linear-gradient(to bottom, #000033, #000066);
+    z-index: -1;
+    overflow: hidden;
+}
+
+.space-background::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: 
+        radial-gradient(2px 2px at 40px 60px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 20px 50px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 30px 100px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 60px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 110px 90px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 190px 150px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    animation: space-animation 60s linear infinite;
+}
+
+@keyframes space-animation {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
 }
 
 /* Stars Animation */
@@ -253,33 +290,31 @@ body {
 }
 
 /* Button Styles */
-.lets-go-btn {
-    font-family: 'Rajdhani', sans-serif;
-    padding: 1.2rem 3rem;
-    font-size: 1.8rem;
-    font-weight: 700;
-    background: transparent;
-    color: #fff;
-    border: 3px solid #fff;
-    border-radius: 50px;
+.cta-button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #ff4d4d, #ff0080);
+    border: none;
+    border-radius: 30px;
+    color: white;
     cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
     text-transform: uppercase;
     letter-spacing: 2px;
-}
-
-.lets-go-btn:hover {
-    background: rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
     box-shadow: 
-        0 0 20px rgba(255,255,255,0.3),
-        0 0 40px rgba(255,255,255,0.1),
-        0 0 60px rgba(255,255,255,0.1);
-    transform: scale(1.05);
+        0 0 10px rgba(255,77,77,0.5),
+        0 0 20px rgba(255,0,128,0.3);
 }
 
-.lets-go-btn:active {
+.cta-button:hover {
+    transform: scale(1.1);
+    box-shadow: 
+        0 0 20px rgba(255,77,77,0.7),
+        0 0 40px rgba(255,0,128,0.5);
+}
+
+.cta-button:active {
     transform: scale(0.95);
 }
 

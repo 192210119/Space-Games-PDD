@@ -1,0 +1,70 @@
+/* Journey Page Styles */
+.journey-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#mars-container {
+    position: absolute;
+    top: 50%;
+    right: -200px; /* Start off-screen */
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+    animation: marsAppear 10s forwards;
+}
+
+.rocket-journey {
+    position: absolute;
+    left: -100px; /* Start off-screen */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 300px;
+    animation: rocketFlight 10s forwards;
+    z-index: 2;
+}
+
+.journey-rocket-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+}
+
+@keyframes rocketFlight {
+    0% {
+        left: -100px;
+        transform: translateY(-50%) scale(1);
+    }
+    20% {
+        left: 20%;
+        transform: translateY(-50%) scale(0.9);
+    }
+    80% {
+        left: 40%;
+        transform: translateY(-50%) scale(0.8);
+    }
+    100% {
+        left: 30%;
+        transform: translateY(-50%) scale(0.7);
+    }
+}
+
+@keyframes marsAppear {
+    0% {
+        right: -200px;
+        transform: translateY(-50%) scale(1);
+    }
+    50% {
+        right: -100px;
+        transform: translateY(-50%) scale(1.5);
+    }
+    100% {
+        right: 100px;
+        transform: translateY(-50%) scale(2);
+    }
+}
