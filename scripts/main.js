@@ -17,15 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Add click handler for navigation
+        // Add click handler for navigation with rocket animation
         button.addEventListener('click', function() {
-            // Add fade-out animation class to the current page
-            document.body.classList.add('fade-out');
+            const rocket = document.querySelector('.rocket');
+            const rocketImage = document.querySelector('.rocket-image');
+            const content = document.querySelector('.content');
             
-            // Navigate to journey page after animation
-            setTimeout(() => {
-                window.location.href = 'journey.html';
-            }, 1000);
+            if (rocket && rocketImage && content) {
+                // Add takeoff animations
+                rocket.classList.add('takeoff');
+                rocketImage.classList.add('takeoff');
+                content.classList.add('fade-out');
+                
+                // Navigate to journey page after animation
+                setTimeout(() => {
+                    window.location.href = 'journey.html';
+                }, 2000); // Match the animation duration
+            }
         });
     }
     
