@@ -1,0 +1,154 @@
+.game-container {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+#gameCanvas {
+    border: 2px solid #30f3ff;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px #30f3ff;
+    backdrop-filter: blur(5px);
+}
+
+.hud {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: #30f3ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2em;
+    text-shadow: 0 0 10px #30f3ff;
+}
+
+.score, .health, .level {
+    margin: 10px;
+    text-shadow: 0 0 5px #30f3ff;
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 2em;
+    border: 2px solid #30f3ff;
+    border-radius: 10px;
+    text-align: center;
+    color: #30f3ff;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 20px #30f3ff;
+    backdrop-filter: blur(10px);
+}
+
+.game-over h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #30f3ff;
+}
+
+.game-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: 2px solid #30f3ff;
+    color: #30f3ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    outline: none;
+}
+
+.game-button:hover {
+    background-color: #30f3ff;
+    color: #000;
+    box-shadow: 0 0 20px #30f3ff;
+}
+
+.game-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+button.game-button {
+    background: none;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.level-complete {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 2em;
+    border: 2px solid #30f3ff;
+    border-radius: 10px;
+    text-align: center;
+    color: #30f3ff;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 20px #30f3ff;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.level-complete h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #30f3ff;
+}
+
+.level-complete button {
+    margin: 10px;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: 2px solid #30f3ff;
+    color: #30f3ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.level-complete button:hover {
+    background-color: #30f3ff;
+    color: #000;
+    box-shadow: 0 0 20px #30f3ff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes rocketThrust {
+    0% {
+        box-shadow: 0 0 10px #30f3ff;
+    }
+    50% {
+        box-shadow: 0 0 20px #30f3ff, 0 0 40px #30f3ff;
+    }
+    100% {
+        box-shadow: 0 0 10px #30f3ff;
+    }
+}

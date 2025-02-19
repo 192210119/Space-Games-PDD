@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 rocketImage.classList.add('takeoff');
                 content.classList.add('fade-out');
                 
-                // Navigate to journey page after animation
+                // Navigate to game after animation
                 setTimeout(() => {
-                    window.location.href = 'journey.html';
-                }, 2000); // Match the animation duration
+                    window.location.href = 'game.html';
+                }, 2000); // Wait for 2 seconds for the animation to complete
             }
         });
     }

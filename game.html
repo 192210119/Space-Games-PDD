@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Resource Collector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&family=Audiowide&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+        <div class="stars4"></div>
+        <div class="stars5"></div>
+        <div class="planets">
+            <div class="planet planet1"></div>
+            <div class="planet planet2"></div>
+            <div class="planet planet3"></div>
+        </div>
+        <div class="asteroids">
+            <div class="asteroid asteroid1"></div>
+            <div class="asteroid asteroid2"></div>
+            <div class="asteroid asteroid3"></div>
+        </div>
+        <div class="nebula"></div>
+        
+        <div class="game-container">
+            <div class="hud">
+                <div class="score">Resources: <span id="score">0</span></div>
+                <div class="health">Health: <span id="health">100</span></div>
+                <div class="level">Level: <span id="level">1</span></div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div class="game-over hidden">
+                <h2>Game Over!</h2>
+                <p>Resources Collected: <span id="final-score">0</span></p>
+                <p>Level Reached: <span id="final-level">1</span></p>
+                <div class="game-buttons">
+                    <button type="button" id="restart-button" class="game-button">Play Again</button>
+                    <button type="button" id="home-button" class="game-button">Back to Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize game instance globally
+        window.game = null;
+        
+        // Wait for everything to load
+        window.addEventListener('load', function() {
+            // Create game instance
+            window.game = new Game();
+        });
+
+        // Function to handle game restart
+        function restartGame() {
+            console.log('Restarting game...');
+            location.reload();
+        }
+
+        // Function to go back to home
+        function goToHome() {
+            console.log('Going to home...');
+            window.location.href = 'index.html';
+        }
+
+        // Set up button listeners when the document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const restartButton = document.getElementById('restart-button');
+            const homeButton = document.getElementById('home-button');
+
+            if (restartButton) {
+                restartButton.addEventListener('click', restartGame);
+            }
+
+            if (homeButton) {
+                homeButton.addEventListener('click', goToHome);
+            }
+        });
+    </script>
+    
+    <script src="scripts/game.js"></script>
+</body>
+</html>
