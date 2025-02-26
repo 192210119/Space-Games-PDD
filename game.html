@@ -34,10 +34,12 @@
                 <div class="score">Resources: <span id="score">0</span></div>
                 <div class="health">Health: <span id="health">100</span></div>
                 <div class="level">Level: <span id="level">1</span></div>
+                <button id="pause-button" class="game-button">⏸️ Pause</button>
             </div>
             <canvas id="gameCanvas"></canvas>
             <div class="game-over hidden">
                 <h2>Game Over!</h2>
+                <p class="game-over-message"></p>
                 <p>Resources Collected: <span id="final-score">0</span></p>
                 <p>Level Reached: <span id="final-level">1</span></p>
                 <div class="game-buttons">
@@ -45,8 +47,60 @@
                     <button type="button" id="home-button" class="game-button">Back to Home</button>
                 </div>
             </div>
+            <div class="pause-screen hidden">
+                <h2>Game Paused</h2>
+                <div class="game-buttons">
+                    <button type="button" id="resume-button" class="game-button">Resume Game</button>
+                    <button type="button" id="pause-home-button" class="game-button">Back to Home</button>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const pauseButton = document.getElementById("pause-button");
+            const resumeButton = document.getElementById("resume-button");
+            const restartButton = document.getElementById("restart-button");
+            const homeButton = document.getElementById("home-button");
+            const pauseHomeButton = document.getElementById("pause-home-button");
+    
+            if (pauseButton) {
+                pauseButton.addEventListener("click", function () {
+                    console.log("Game Paused");
+                    window.game.pauseGame();
+                });
+            }
+    
+            if (resumeButton) {
+                resumeButton.addEventListener("click", function () {
+                    console.log("Game Resumed");
+                    window.game.resumeGame();
+                });
+            }
+    
+            if (restartButton) {
+                restartButton.addEventListener("click", function () {
+                    console.log("Restarting Game...");
+                    sessionStorage.clear();
+                    location.reload();
+                });
+            }
+    
+            if (homeButton || pauseHomeButton) {
+                [homeButton, pauseHomeButton].forEach(button => {
+                    if (button) {
+                        button.addEventListener("click", function () {
+                            console.log("Going to Home...");
+                            sessionStorage.clear();
+                            window.location.href = "index.html";
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+    
 
     <script>
         // Initialize game instance globally
@@ -71,18 +125,7 @@
         }
 
         // Set up button listeners when the document is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const restartButton = document.getElementById('restart-button');
-            const homeButton = document.getElementById('home-button');
-
-            if (restartButton) {
-                restartButton.addEventListener('click', restartGame);
-            }
-
-            if (homeButton) {
-                homeButton.addEventListener('click', goToHome);
-            }
-        });
+        
     </script>
     
     <script src="scripts/game.js"></script>
