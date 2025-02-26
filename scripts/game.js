@@ -8,7 +8,6 @@ class Game {
         this.rocketImg = new Image();
         this.rocketImg.src = 'assets/rocket.png';
         this.gameLoopRunning = false;
-        this.isPaused = false;
         
         this.player = {
             x: this.canvas.width / 2,
@@ -83,58 +82,14 @@ class Game {
     }
     
     setupEventListeners() {
-        // Keyboard controls
         window.addEventListener('keydown', (e) => {
             this.keys[e.key] = true;
             if (e.key === 'ArrowUp') this.player.thrust = true;
-            if (e.key.toLowerCase() === 'p') this.togglePause();
         });
         window.addEventListener('keyup', (e) => {
             this.keys[e.key] = false;
             if (e.key === 'ArrowUp') this.player.thrust = false;
         });
-
-        // Pause button controls
-        const pauseButton = document.getElementById('pause-button');
-        const resumeButton = document.getElementById('resume-button');
-        const pauseHomeButton = document.getElementById('pause-home-button');
-
-        pauseButton.addEventListener('click', () => this.togglePause());
-        resumeButton.addEventListener('click', () => this.togglePause());
-        pauseHomeButton.addEventListener('click', () => {
-            window.location.href = 'index.html';
-        });
-    }
-
-    togglePause() {
-        this.isPaused = !this.isPaused;
-        const pauseScreen = document.querySelector('.pause-screen');
-
-        if (this.isPaused) {
-            clearInterval(this.spawnInterval);
-            clearInterval(this.timerInterval);
-            pauseScreen.classList.remove('hidden');
-        } else {
-            this.spawnInterval = setInterval(() => this.spawnObjects(), 1000);
-            this.startTimer();
-            pauseScreen.classList.add('hidden');
-        }
-    }
-
-    startTimer() {
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-        }
-        this.timerInterval = setInterval(() => {
-            if (!this.gameOver && !this.isPaused) {
-                this.levelTimeLeft--;
-                document.getElementById('level').textContent = this.level;
-                document.getElementById('timer').textContent = this.levelTimeLeft;
-                if (this.levelTimeLeft <= 0) {
-                    this.checkLevelCompletion();
-                }
-            }
-        }, 1000);
     }
     
     startLevel(level) {
@@ -166,7 +121,16 @@ class Game {
         this.spawnInterval = setInterval(() => this.spawnObjects(), 1000);
         
         // Start level timer
-        this.startTimer();
+        this.timerInterval = setInterval(() => {
+            if (!this.gameOver) {
+                this.levelTimeLeft--;
+                document.getElementById('level').textContent = this.level;
+                
+                if (this.levelTimeLeft <= 0) {
+                    this.checkLevelCompletion();
+                }
+            }
+        }, 1000);
         
         // Update HUD
         document.getElementById('score').textContent = `0/${this.levelGoals[this.level].resourcesNeeded}`;
@@ -193,70 +157,40 @@ class Game {
     checkLevelCompletion() {
         console.log('Checking level completion:', this.score, 'needed:', this.levelGoals[this.level].resourcesNeeded);
         
-        // Only complete level if score exactly matches the requirement
-        if (this.score === this.levelGoals[this.level].resourcesNeeded) {
-            // Immediately stop all game processes
-            this.gameOver = true;
-            if (this.timerInterval) {
-                clearInterval(this.timerInterval);
-                this.timerInterval = null;
-            }
-            if (this.spawnInterval) {
-                clearInterval(this.spawnInterval);
-                this.spawnInterval = null;
-            }
-            
+        if (this.score >= this.levelGoals[this.level].resourcesNeeded) {
             // Level completed successfully
             if (this.level === 5) {
                 this.showVictoryScreen();
             } else {
                 this.showLevelComplete();
-                // Automatically move to next level after a short delay
-                setTimeout(() => {
-                    const levelCompleteScreen = document.querySelector('.level-complete');
-                    if (levelCompleteScreen) {
-                        levelCompleteScreen.remove();
-                    }
-                    this.gameOver = false;
-                    this.startLevel(this.level + 1);
-                }, 2000); // Wait 2 seconds before moving to next level
             }
-            return; // Exit to prevent further timer checks
-        } 
-        
-        // Only check timer if level isn't complete
-        if (this.levelTimeLeft <= 0 && !this.gameOver) {
+        } else if (this.levelTimeLeft <= 0) {
             // Level failed due to time running out
             console.log('Level failed - time ran out');
             this.endGame(false);
         }
     }
-
+    
     showLevelComplete() {
-        // Stop the game loop and ensure all intervals are cleared
+        // Stop the game loop and intervals
         this.gameLoopRunning = false;
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
-        if (this.spawnInterval) {
-            clearInterval(this.spawnInterval);
-            this.spawnInterval = null;
-        }
-        
-        // Remove any existing level complete screens
-        const existingScreens = document.querySelectorAll('.level-complete');
-        existingScreens.forEach(screen => screen.remove());
+        clearInterval(this.spawnInterval);
+        clearInterval(this.timerInterval);
         
         const levelCompleteDiv = document.createElement('div');
         levelCompleteDiv.className = 'level-complete';
         levelCompleteDiv.innerHTML = `
             <h2>Level ${this.level} Complete!</h2>
             <p>Resources Collected: ${this.score}/${this.levelGoals[this.level].resourcesNeeded}</p>
-            <p>Moving to Level ${this.level + 1} in 2 seconds...</p>
+            <button id="next-level">Next Level</button>
         `;
         
         document.body.appendChild(levelCompleteDiv);
+        
+        document.getElementById('next-level').addEventListener('click', () => {
+            levelCompleteDiv.remove();
+            this.startLevel(this.level + 1);
+        });
     }
     
     spawnObjects() {
@@ -291,8 +225,8 @@ class Game {
     }
     
     update() {
-        // Don't update if game is over or paused
-        if (this.gameOver || !this.gameLoopRunning || this.isPaused) {
+        // Don't update if game is over
+        if (this.gameOver || !this.gameLoopRunning) {
             return;
         }
         
@@ -354,16 +288,11 @@ class Game {
         this.resources = this.resources.filter(resource => {
             if (this.checkCollision(this.player, resource)) {
                 if (!this.gameOver && this.score < currentGoal) {
-                    const newScore = this.score + 10;
-                    // Only collect if it won't exceed the goal
-                    if (newScore <= currentGoal) {
-                        this.score = newScore;
-                        document.getElementById('score').textContent = `${this.score}/${currentGoal}`;
-                        
-                        // Check for exact match with goal
-                        if (this.score === currentGoal) {
-                            this.checkLevelCompletion();
-                        }
+                    this.score += 10;
+                    document.getElementById('score').textContent = `${this.score}/${currentGoal}`;
+                    
+                    if (this.score >= currentGoal) {
+                        this.checkLevelCompletion();
                     }
                 }
                 return false; // Remove the resource
@@ -482,7 +411,7 @@ class Game {
     }
     
     gameLoop() {
-        if (!this.gameLoopRunning || this.isPaused) return;
+        if (!this.gameLoopRunning) return;
         
         this.update();
         this.draw();
@@ -504,35 +433,16 @@ class Game {
             
             // Show game over screen
             const gameOverScreen = document.querySelector('.game-over');
-            const gameOverMessage = gameOverScreen.querySelector('.game-over-message');
-            
             if (completed) {
-                gameOverScreen.querySelector('h2').textContent = 'Level Complete!';
-                gameOverMessage.textContent = `Great job! You collected all ${this.levelGoals[this.level].resourcesNeeded} resources!`;
-                document.getElementById('restart-button').textContent = 'Next Level →';
+                gameOverScreen.querySelector('h2').textContent = 'Game Over - Level Complete!';
+                gameOverScreen.querySelector('p').textContent = `You collected ${this.score} resources!`;
             } else {
-                gameOverScreen.querySelector('h2').textContent = 'Level Failed!';
-                gameOverMessage.textContent = `You collected ${this.score}/${this.levelGoals[this.level].resourcesNeeded} resources. Try again!`;
-                document.getElementById('restart-button').textContent = '🔄 Try Again';
+                gameOverScreen.querySelector('h2').textContent = 'Game Over';
+                gameOverScreen.querySelector('p').textContent = 'Try again!';
             }
-            
             document.getElementById('final-score').textContent = this.score;
             document.getElementById('final-level').textContent = this.level;
             gameOverScreen.classList.remove('hidden');
-            
-            // Set up button listeners
-            document.getElementById('restart-button').onclick = () => {
-                gameOverScreen.classList.add('hidden');
-                if (completed) {
-                    this.startLevel(this.level + 1);
-                } else {
-                    this.startLevel(this.level); // Restart same level
-                }
-            };
-            
-            document.getElementById('home-button').onclick = () => {
-                window.location.href = 'index.html';
-            };
         }
     }
 
