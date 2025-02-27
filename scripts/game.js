@@ -418,32 +418,35 @@ class Game {
         requestAnimationFrame(() => this.gameLoop());
     }
     
-    endGame(completed) {
-        // Only end the game if it hasn't already ended
-        if (!this.gameOver) {
-            console.log('Game over triggered');
+    endGame(success) {
+        this.gameOver = true;
+        this.gameLoopRunning = false;
+        clearInterval(this.spawnInterval);
+        clearInterval(this.timerInterval);
+        
+        const gameOverScreen = document.querySelector('.game-over');
+        if (success) {
+            gameOverScreen.querySelector('h2').textContent = 'Game Over - Victory!';
+            gameOverScreen.querySelector('p').textContent = 'Congratulations on completing the level!';
+        } else {
+            gameOverScreen.querySelector('h2').textContent = 'Game Over - Mission Failed';
+            gameOverScreen.querySelector('p').textContent = 'You failed to collect enough resources in time.';
             
-            // Set game over first to stop all updates
-            this.gameOver = true;
-            this.gameLoopRunning = false;
-            
-            // Clear all intervals
-            clearInterval(this.spawnInterval);
-            clearInterval(this.timerInterval);
-            
-            // Show game over screen
-            const gameOverScreen = document.querySelector('.game-over');
-            if (completed) {
-                gameOverScreen.querySelector('h2').textContent = 'Game Over - Level Complete!';
-                gameOverScreen.querySelector('p').textContent = `You collected ${this.score} resources!`;
-            } else {
-                gameOverScreen.querySelector('h2').textContent = 'Game Over';
-                gameOverScreen.querySelector('p').textContent = 'Try again!';
-            }
-            document.getElementById('final-score').textContent = this.score;
-            document.getElementById('final-level').textContent = this.level;
-            gameOverScreen.classList.remove('hidden');
+            // Add restart button
+            const restartButton = document.createElement('button');
+            restartButton.textContent = 'Restart Level';
+            restartButton.className = 'restart-button';
+            restartButton.onclick = () => {
+                gameOverScreen.classList.add('hidden');
+                gameOverScreen.querySelector('.restart-button')?.remove();
+                this.startLevel(this.level);
+            };
+            gameOverScreen.appendChild(restartButton);
         }
+        
+        document.getElementById('final-score').textContent = this.score;
+        document.getElementById('final-level').textContent = this.level;
+        gameOverScreen.classList.remove('hidden');
     }
 
     restart() {
