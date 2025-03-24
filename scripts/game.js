@@ -167,7 +167,7 @@ class Game {
         } else if (this.levelTimeLeft <= 0) {
             // Level failed due to time running out
             console.log('Level failed - time ran out');
-            this.endGame(false);
+            this.showLevelFailed();
         }
     }
     
@@ -191,6 +191,42 @@ class Game {
             levelCompleteDiv.remove();
             this.startLevel(this.level + 1);
         });
+    }
+    
+    showLevelFailed() {
+        this.gameOver = true;
+        this.gameLoopRunning = false;
+        clearInterval(this.spawnInterval);
+        clearInterval(this.timerInterval);
+        
+        const gameOverScreen = document.querySelector('.game-over');
+        gameOverScreen.querySelector('h2').textContent = 'Level Failed!';
+        gameOverScreen.querySelector('p').textContent = `Time's up! You collected ${this.score}/${this.levelGoals[this.level].resourcesNeeded} resources.`;
+        
+        // Clear existing buttons
+        const buttonsContainer = gameOverScreen.querySelector('.game-buttons');
+        buttonsContainer.innerHTML = '';
+        
+        // Add Retry Level button
+        const retryButton = document.createElement('button');
+        retryButton.textContent = 'Retry Level';
+        retryButton.className = 'game-button';
+        retryButton.onclick = () => {
+            gameOverScreen.classList.add('hidden');
+            this.startLevel(this.level);
+        };
+        buttonsContainer.appendChild(retryButton);
+        
+        // Add Back to Home button
+        const homeButton = document.createElement('button');
+        homeButton.textContent = 'Back to Home';
+        homeButton.className = 'game-button';
+        homeButton.onclick = () => {
+            window.location.href = 'index.html';
+        };
+        buttonsContainer.appendChild(homeButton);
+        
+        gameOverScreen.classList.remove('hidden');
     }
     
     spawnObjects() {
@@ -419,34 +455,11 @@ class Game {
     }
     
     endGame(success) {
-        this.gameOver = true;
-        this.gameLoopRunning = false;
-        clearInterval(this.spawnInterval);
-        clearInterval(this.timerInterval);
-        
-        const gameOverScreen = document.querySelector('.game-over');
         if (success) {
-            gameOverScreen.querySelector('h2').textContent = 'Game Over - Victory!';
-            gameOverScreen.querySelector('p').textContent = 'Congratulations on completing the level!';
-        } else {
-            gameOverScreen.querySelector('h2').textContent = 'Game Over - Mission Failed';
-            gameOverScreen.querySelector('p').textContent = 'You failed to collect enough resources in time.';
-            
-            // Add restart button
-            const restartButton = document.createElement('button');
-            restartButton.textContent = 'Restart Level';
-            restartButton.className = 'restart-button';
-            restartButton.onclick = () => {
-                gameOverScreen.classList.add('hidden');
-                gameOverScreen.querySelector('.restart-button')?.remove();
-                this.startLevel(this.level);
-            };
-            gameOverScreen.appendChild(restartButton);
+            this.showVictoryScreen();
+        } else if (this.levelTimeLeft <= 0) {
+            this.showLevelFailed();
         }
-        
-        document.getElementById('final-score').textContent = this.score;
-        document.getElementById('final-level').textContent = this.level;
-        gameOverScreen.classList.remove('hidden');
     }
 
     restart() {
